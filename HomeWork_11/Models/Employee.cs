@@ -55,23 +55,45 @@ namespace HomeWork_11.Models
         /// <summary>
         /// Имя
         /// </summary>
-        public string First_Name { get => first_name; set => first_name = value; }
+        public string First_Name { get => first_name; set
+            {
+                first_name = value;
+                OnPropertyChanged();
+            } }
         /// <summary>
         /// Фамилия
         /// </summary>
-        public string Last_Name { get => last_name; set => last_name = value; } 
+        public string Last_Name { get => last_name; set
+            {
+                
+                last_name = value;
+                OnPropertyChanged();
+            }
+        } 
         /// <summary>
         /// ID
         /// </summary>
-        public string Id { get => id; set => id = value; }
+        public string Id { get => id; set
+            {
+               
+                id = value;
+                OnPropertyChanged();
+            } }
         /// <summary>
         /// Должность
         /// </summary>
-        public string Post { get => post; set => post = value; }
+        public string Post { get => post; set {
+                
+                post = value;
+                OnPropertyChanged();
+            } }
         /// <summary>
         /// Возраст
         /// </summary>
-        public byte Age { get => age; set => age = value; }
+        public byte Age { get => age; set {
+                age = value;
+                OnPropertyChanged();
+            } }
 
         public DateTime EmploymentDate { get => employmentDate; set => employmentDate = value; }
         public uint Salary

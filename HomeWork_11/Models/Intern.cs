@@ -37,7 +37,11 @@ namespace HomeWork_11.Models
         /// <summary>
         /// Автосвойство для даты окончания интернатуры
         /// </summary>
-        public DateTime EndOfInternature { get => endOfInternature; set => endOfInternature = value; }
+        public DateTime EndOfInternature { get => endOfInternature; set
+            {
+                endOfInternature = value;
+                OnPropertyChanged();
+            } }
 
         /// <summary>
         /// Перезагруженное свойство подсчета зарплаты
@@ -47,6 +51,12 @@ namespace HomeWork_11.Models
         public override uint CalcSalary(Department dep = null)
         {
             return 500;
+        }
+
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
         }
     }
 

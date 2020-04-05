@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,12 +36,31 @@ namespace HomeWork_11.Models
         }
 
 
-        public ushort WorkHour { get => workHour; set => workHour = value; }
-        public ushort PaymentForHour { get => paymentForHour; set => paymentForHour = value; }
+        public ushort WorkHour { get => workHour; set 
+            { workHour = value;
+                Salary = CalcSalary();
+                OnPropertyChanged();
+            } }
+        public ushort PaymentForHour { get => paymentForHour; set 
+            {
+                paymentForHour = value;
+                Salary = CalcSalary();
+                OnPropertyChanged();
+            } }
 
         public override uint CalcSalary(Department dep = null)
         {
-            return (uint) workHour * PaymentForHour;
+
+            return (uint) workHour * paymentForHour;
+
+        }
+
+
+
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
         }
     }
 }

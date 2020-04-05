@@ -40,7 +40,7 @@ namespace HomeWork_11
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             StartTransferButton.Visibility = Visibility.Hidden;
-
+            EditEmployeeButton.Visibility = Visibility.Hidden;
             mainorg_expanded();
         }
         /// <summary>
@@ -431,17 +431,20 @@ namespace HomeWork_11
 
         private void SelectWorkerButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            var choise = MessageBox.Show("Уверены c выбором сотрудника ?", "Внимание", MessageBoxButton.YesNo);
-            if (choise == MessageBoxResult.Yes)
+            if ((Employee)ListView1.SelectedItem == null) MessageBox.Show("Вы не выбрали сотрудника");
+            else
             {
-                transferEmployee = (Employee)ListView1.SelectedItem;
-                transferDepartment = (Department)txt1.DataContext;
+                var choise = MessageBox.Show("Уверены c выбором сотрудника ?", "Внимание", MessageBoxButton.YesNo);
+                if (choise == MessageBoxResult.Yes)
+                {
+                    transferEmployee = (Employee)ListView1.SelectedItem;
+                    transferDepartment = (Department)txt1.DataContext;
 
-                StartTransferButton.Visibility = Visibility.Visible;
-                SelectWorkerButton.Visibility = Visibility.Hidden;
+                    StartTransferButton.Visibility = Visibility.Visible;
+                    SelectWorkerButton.Visibility = Visibility.Hidden;
+                    EditEmployeeButton.Visibility = Visibility.Visible;
+                }
             }
-            
         }
 
         private void StartTransferButton_Click(object sender, RoutedEventArgs e)
@@ -470,6 +473,16 @@ namespace HomeWork_11
                 repo.IsSaved = false;
             }
 
+        }
+
+        private void EditEmployeeButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddEmployee editPage = new AddEmployee(transferDepartment, transferEmployee);
+            StartTransferButton.Visibility = Visibility.Hidden;
+            SelectWorkerButton.Visibility = Visibility.Visible;
+            EditEmployeeButton.Visibility = Visibility.Hidden;
+            editPage.Show();
+            repo.IsSaved = false;
         }
     }
 }

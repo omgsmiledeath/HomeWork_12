@@ -162,5 +162,13 @@ namespace HomeWork_11.Models
         }
 
         public bool Equals(Department other) => this.Id == other.Id;
+
+        public void EditWorker(Employee worker)
+        {
+            Employees[Employees.IndexOf(worker)] = worker;
+           // Employees.RemoveAt(Employees.IndexOf(worker));
+           // Employees.Add(worker);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Employees)));
+        }
     }
 }
