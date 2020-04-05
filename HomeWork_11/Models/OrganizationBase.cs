@@ -88,8 +88,8 @@ namespace HomeWork_11.Models
         public void RandomBaseGenerator()
         {
             var randomOrg = new Department("Главный департамент случайных департаментов");
-            randomOrg.AddWorker(new HighManager(lastnames[rand.Next(0, 6)],
-               names[rand.Next(0, 6)], $"Директор {randomOrg.DepartmentName}", (byte)rand.Next(40, 70), DateTime.Now, randomOrg
+            randomOrg.AddWorker(new HighManager(names[rand.Next(0, 6)],
+               lastnames[rand.Next(0, 6)], $"Директор {randomOrg.DepartmentName}", (byte)rand.Next(40, 70), DateTime.Now, randomOrg
                ));
             for (int i = 1; i < 6;i++)
             {
@@ -111,19 +111,19 @@ namespace HomeWork_11.Models
 
         private void randomWorkers(Department inputDep)
         {
-            inputDep.AddWorker(new HighManager(lastnames[rand.Next(0,6)],
-                names[rand.Next(0,6)],$"Начальник {inputDep.DepartmentName}",(byte)rand.Next(40,70),DateTime.Now,inputDep
+            inputDep.AddWorker(new HighManager(names[rand.Next(0,6)],
+                lastnames[rand.Next(0,6)],$"Начальник {inputDep.DepartmentName}",(byte)rand.Next(40,70),DateTime.Now,inputDep
                 ));
             for(int i= 0; i<rand.Next(1,5);i++)
             {
-                inputDep.AddWorker(new Manager(lastnames[rand.Next(0, 6)],
-                names[rand.Next(0, 6)], $"Специалист {inputDep.DepartmentName}", (byte)rand.Next(18, 70), DateTime.Now,
+                inputDep.AddWorker(new Manager(names[rand.Next(0, 6)],
+                lastnames[rand.Next(0, 6)], $"Специалист {inputDep.DepartmentName}", (byte)rand.Next(18, 70), DateTime.Now,
                 (ushort)rand.Next(150, 200), (ushort)rand.Next(5, 20)
                 ));
                 if (rand.Next(0, 2) == 0)
                 {
-                    inputDep.AddWorker(new Intern(lastnames[rand.Next(0, 6)],
-                names[rand.Next(0, 6)], (byte)rand.Next(18, 70), DateTime.Now, DateTime.Now
+                    inputDep.AddWorker(new Intern(names[rand.Next(0, 6)],
+                lastnames[rand.Next(0, 6)], (byte)rand.Next(18, 70), DateTime.Now, DateTime.Now
                 ));
                 }
             }

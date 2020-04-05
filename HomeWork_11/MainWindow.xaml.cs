@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using HomeWork_11.Models;
@@ -15,6 +16,11 @@ namespace HomeWork_11
     {
         private Department organization; // Экземпляр всей организации
         private OrganizationBase repo; // экземпляр базы для сохранения и загрузок
+       
+        private Employee transferEmployee ;
+        private Department transferDepartment;
+
+
         #region Конструктор
         /// <summary>
         /// При запуске приложения
@@ -33,6 +39,8 @@ namespace HomeWork_11
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            StartTransferButton.Visibility = Visibility.Hidden;
+
             mainorg_expanded();
         }
         /// <summary>
@@ -46,7 +54,7 @@ namespace HomeWork_11
                 //repo.RandomBaseGenerator();
                 
                 organization = repo.GetOrganization();
-                //CalcSalary();
+               //CalcSalary();
             }
             else
             {
@@ -61,6 +69,7 @@ namespace HomeWork_11
                 }
                 
             }
+            
         }
         /// <summary>
         /// Метод заполнения и установок для TreeView главного элемента
@@ -78,7 +87,8 @@ namespace HomeWork_11
 
             OrganizationTree.Items.Clear();
             OrganizationTree.Items.Add(mainItem);
-            
+
+        
 
             foreach (var item in organization.GetDepartmens())
             {
@@ -386,6 +396,80 @@ namespace HomeWork_11
         private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
+        {
+            
+            var header = sender as GridViewColumnHeader;
+            var thisHeader = header.Content;
+
+            var dep = txt1.DataContext as Department;
+            if(dep!=null)
+            switch ((thisHeader as TextBlock).Text)
+            {
+                case "Фамилия":
+                    dep.Sort(Department.SortCriterion.LastName);
+                    break;
+                case "Имя":
+                    dep.Sort(Department.SortCriterion.FristName);
+                    break;
+                case "Должность":
+                    dep.Sort(Department.SortCriterion.Type);
+                    break;
+                case "Возраст(Лет)":
+                    dep.Sort(Department.SortCriterion.Age);
+                    break;
+                case "Зарплата($)":
+                    dep.Sort(Department.SortCriterion.Salary);
+                    break;
+                default:
+                    dep.Sort(Department.SortCriterion.DateEmployee);
+                    break;
+            }
+        }
+
+        private void SelectWorkerButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            var choise = MessageBox.Show("Уверены c выбором сотрудника ?", "Внимание", MessageBoxButton.YesNo);
+            if (choise == MessageBoxResult.Yes)
+            {
+                transferEmployee = (Employee)ListView1.SelectedItem;
+                transferDepartment = (Department)txt1.DataContext;
+
+                StartTransferButton.Visibility = Visibility.Visible;
+                SelectWorkerButton.Visibility = Visibility.Hidden;
+            }
+            
+        }
+
+        private void StartTransferButton_Click(object sender, RoutedEventArgs e)
+        {
+            var currDep = (Department)txt1.DataContext;
+            if (transferDepartment == currDep) MessageBox.Show("Выберите другой департамент для перевода сотрудника (нельзя переводить в тот же самый департамент)");
+            else
+            {
+                currDep.AddWorker(transferEmployee);
+                transferDepartment.Employees.Remove(transferEmployee);
+                transferEmployee = null;
+                transferDepartment = null;
+                StartTransferButton.Visibility = Visibility.Hidden;
+                SelectWorkerButton.Visibility = Visibility.Visible;
+            }
+            repo.IsSaved = false;
+        }
+
+        private void EditDepNameButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddDepartment adddep = new AddDepartment((Department)txt1.DataContext);
+
+            if (adddep.ShowDialog() == true)
+            {
+                mainorg_expanded();
+                repo.IsSaved = false;
+            }
+
         }
     }
 }

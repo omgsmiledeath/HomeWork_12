@@ -5,8 +5,9 @@ using System.Runtime.CompilerServices;
 
 namespace HomeWork_11.Models
 {
-    public abstract class Employee : IEquatable<Employee>, INotifyPropertyChanged
+    public abstract class Employee : IEquatable<Employee>, INotifyPropertyChanged 
     {
+       
         #region Static поля и конструктор
         static protected List<string> IdList; // Список всех ID 
         static protected long idCount;// Число сотрудников

@@ -29,6 +29,7 @@ namespace HomeWork_11
         {
             InitializeComponent();
             this.dep = dep;
+            DepNameBox.DataContext = dep.DepartmentName;
         }
 
         private void AddDepButton_Click(object sender, RoutedEventArgs e)
