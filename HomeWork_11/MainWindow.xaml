@@ -1,0 +1,176 @@
+﻿<Window x:Class="HomeWork_11.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:local="clr-namespace:HomeWork_11"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="473.03" Width="1200"
+        MinWidth="1200" MinHeight="450"
+ Loaded="Window_Loaded" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="167*"/>
+            <ColumnDefinition Width="422*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64*"/>
+                <ColumnDefinition Width="217*"/>
+            </Grid.ColumnDefinitions>
+            <TreeView Name="OrganizationTree" Grid.ColumnSpan="2" >
+
+                <TreeView.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="HeaderTemplate" >
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" 
+                                               >
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="White"/>
+                                        </TextBlock.Foreground>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TreeView.Resources>
+            </TreeView>
+        </Grid>
+
+        <ListView Grid.Column="1" Grid.Row="1" x:Name="ListView1" 
+                  IsSynchronizedWithCurrentItem="True" >
+            <ListView.View>
+                <GridView>
+
+                    <GridViewColumn Width="100" 
+                        DisplayMemberBinding="{Binding Path=First_Name}">
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap">Имя</TextBlock>
+
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100"
+                        DisplayMemberBinding="{Binding Path=Last_Name}">
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap">Фамилия</TextBlock>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100"
+                        DisplayMemberBinding="{Binding Path=Post}">
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap">Должность</TextBlock>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100"
+                        DisplayMemberBinding="{Binding Path=Age}">
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap">Возраст(Лет)</TextBlock>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100"
+                        DisplayMemberBinding="{Binding Path=EmploymentDate,
+                        StringFormat='yyyy-MM-dd'}">
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap">Дата принятия на работу</TextBlock>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100"
+                        DisplayMemberBinding="{Binding Path=Salary}">
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap">Зарплата($)</TextBlock>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+
+        </ListView>
+        <Grid  Grid.Column="2" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <StackPanel  Grid.Row="0">
+
+                <TextBlock x:Name="txt2" Text="Работа с сотрудниками департамента:"
+                       TextWrapping="Wrap"/>
+                <TextBlock x:Name="txt1" 
+                   Text="{Binding DepartmentName}" TextWrapping="Wrap"
+                    />
+                <Button x:Name="AddWorkerButton" 
+                        Click="AddWorkerButton_Click" 
+                Content="Добавить сотрудника" Margin="0 0 0 10"/>
+                <Button x:Name="DelWorkerButton" Click="DelWorkerButton_Click"
+                        Content="Удалить сотрудника" />
+                <Button x:Name="CalcSalaryButton" Margin="0 10 0 0"
+                        Click="CalcSalaryButton_Click" Height="41">
+                    <TextBlock TextWrapping="Wrap">Посчитать зп начальникам</TextBlock>
+                </Button>
+            </StackPanel>
+
+
+            <StackPanel  Grid.Row="1">
+                <TextBlock Text="Работа с департаментами" 
+                           TextWrapping="Wrap"/>
+                <TextBox x:Name="NameDepBox"
+                    materialDesign:HintAssist.Hint="Введите название департамента"/>
+
+                <Button x:Name="AddDepartment" Content="Добавить департамент"
+                    Click="AddDepartment_Click" 
+                        Margin="0 0 0 10"/>
+                <Button x:Name="DelDepartment" 
+                        Content="Удалить департамент" Click="DelDepartment_Click"
+                        />
+
+            </StackPanel>
+
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <materialDesign:ComboBoxPopup>
+
+            </materialDesign:ComboBoxPopup>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button x:Name="SaveBaseButton"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}" Click="SaveBaseButton_Click">
+                <materialDesign:PackIcon Kind="ContentSaveOutline" />
+            </Button>
+
+
+            <Button x:Name="SaveAsBaseButton"
+                    Background="{x:Null}"
+                    Click="SaveAsBaseButton_Click"
+                    BorderBrush="{x:Null}">
+                <materialDesign:PackIcon Kind="ContentSaveSettingsOutline" />
+                
+            </Button>
+
+
+            <Button x:Name="LoadBaseButton"
+                    Click="LoadBaseButton_Click"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}">
+                <materialDesign:PackIcon Kind="FolderUploadOutline" />
+            </Button>
+
+            
+
+        </StackPanel>
+        <Button Grid.Column="2" x:Name="ExitButton" Background="{x:Null}"
+                    BorderBrush="{x:Null}" 
+                    Click="ExitButton_Click" HorizontalAlignment="Right" >
+            <materialDesign:PackIcon Kind="ExitToApp" />
+        </Button>
+    </Grid>
+</Window>
