@@ -10,7 +10,7 @@ namespace HomeWork_11
     {
 
         private Department dep; //хранит департамент в котором добавляется сотрудник
-
+        private Employee empl;
         /// <summary>
         /// Конструктор окна добавления работника
         /// </summary>
@@ -19,6 +19,21 @@ namespace HomeWork_11
         {
             InitializeComponent();
             this.dep = dep;
+           
+        }
+
+        public AddEmployee(Department dep,Employee empl)
+        {
+            InitializeComponent();
+            this.dep = dep;
+            this.empl = empl;
+        }
+
+        private void EditMode()
+        {
+            EmplTypes.Visibility = Visibility.Hidden;
+
+        
 
         }
 
