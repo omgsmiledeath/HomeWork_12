@@ -63,20 +63,32 @@
 
                             <GridViewColumnHeader Click="GridViewColumnHeader_Click" 
                             >
-                                <TextBlock TextWrapping="Wrap">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon x:Name="NameAsc"
+                                        Kind="SortAscending" Visibility="Collapsed" />
+                                    <materialDesign:PackIcon x:Name="NameDesc"
+                                        Kind="SortDescending" Visibility="Collapsed" />
+                                    <TextBlock TextWrapping="Wrap">
                                Имя
-                                </TextBlock>
+                                    </TextBlock>
+                                </StackPanel>
                             </GridViewColumnHeader>
-
+                            
 
                         </GridViewColumn>
 
                         <GridViewColumn Width="100"
                         DisplayMemberBinding="{Binding Path=Last_Name}">
                             <GridViewColumnHeader  Click="GridViewColumnHeader_Click" >
-                                <TextBlock TextWrapping="Wrap">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon x:Name="LNameAsc"
+                                        Kind="SortAscending" Visibility="Collapsed" />
+                                    <materialDesign:PackIcon x:Name="LNameDesc"
+                                        Kind="SortDescending" Visibility="Collapsed" />
+                                    <TextBlock TextWrapping="Wrap">
                               Фамилия
-                                </TextBlock>
+                                    </TextBlock>
+                                </StackPanel>
                             </GridViewColumnHeader>
 
 
@@ -85,14 +97,26 @@
                         <GridViewColumn Width="110"
                         DisplayMemberBinding="{Binding Path=Post}">
                             <GridViewColumnHeader  Click="GridViewColumnHeader_Click" >
-                                <TextBlock  TextWrapping="Wrap">Должность</TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon x:Name="PostAsc"
+                                        Kind="SortAscending" Visibility="Collapsed" />
+                                    <materialDesign:PackIcon x:Name="PostDesc"
+                                        Kind="SortDescending" Visibility="Collapsed" />
+                                    <TextBlock  TextWrapping="Wrap">Должность</TextBlock>
+                                </StackPanel>
                             </GridViewColumnHeader>
                         </GridViewColumn>
 
                         <GridViewColumn Width="100"
                         DisplayMemberBinding="{Binding Path=Age}">
                             <GridViewColumnHeader  Click="GridViewColumnHeader_Click" >
-                                <TextBlock  TextWrapping="Wrap">Возраст(Лет)</TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon x:Name="AgeAsc"
+                                        Kind="SortAscending" Visibility="Collapsed" />
+                                    <materialDesign:PackIcon x:Name="AgeDesc"
+                                        Kind="SortDescending" Visibility="Collapsed" />
+                                    <TextBlock  TextWrapping="Wrap">Возраст(Лет)</TextBlock>
+                                </StackPanel>
                             </GridViewColumnHeader>
                         </GridViewColumn>
 
@@ -100,14 +124,26 @@
                         DisplayMemberBinding="{Binding Path=EmploymentDate,
                         StringFormat='yyyy-MM-dd'}">
                             <GridViewColumnHeader  Click="GridViewColumnHeader_Click" >
-                                <TextBlock  TextWrapping="Wrap">Дата принятия на работу</TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon x:Name="EmplDateAsc"
+                                        Kind="SortAscending" Visibility="Collapsed" />
+                                    <materialDesign:PackIcon x:Name="EmplDateDesc"
+                                        Kind="SortDescending" Visibility="Collapsed" />
+                                    <TextBlock  TextWrapping="Wrap">Дата принятия на работу</TextBlock>
+                                </StackPanel>
                             </GridViewColumnHeader>
                         </GridViewColumn>
 
                         <GridViewColumn Width="100"
                         DisplayMemberBinding="{Binding Path=Salary}">
                             <GridViewColumnHeader  Click="GridViewColumnHeader_Click" >
-                                <TextBlock  TextWrapping="Wrap">Зарплата($)</TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon x:Name="SalaryAsc"
+                                        Kind="SortAscending" Visibility="Collapsed" />
+                                    <materialDesign:PackIcon x:Name="SalaryDesc"
+                                        Kind="SortDescending" Visibility="Collapsed" />
+                                    <TextBlock  TextWrapping="Wrap">Зарплата($)</TextBlock>
+                                </StackPanel>
                             </GridViewColumnHeader >
                         </GridViewColumn>
                     </GridView>

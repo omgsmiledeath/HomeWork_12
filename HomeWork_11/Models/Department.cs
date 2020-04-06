@@ -75,7 +75,8 @@ namespace HomeWork_11.Models
             Salary
         }
 
-        private class SortByFirstName : IComparer<Employee>
+        #region Ascending
+        private class SortByFirstNameAscending : IComparer<Employee>
         {
             public int Compare(Employee x, Employee y)
             {
@@ -83,33 +84,33 @@ namespace HomeWork_11.Models
             }
         }
 
-        private class SortByLastName : IComparer<Employee>
+        private class SortByLastNameAscending : IComparer<Employee>
         {
             public int Compare(Employee x, Employee y)
             {
                 return String.Compare(x.Last_Name, y.Last_Name);
             }
         }
-        private class SortByAge : IComparer<Employee>
+        private class SortByAgeAscending : IComparer<Employee>
         {
             public int Compare(Employee x, Employee y)
             {
                 if (x.Age == y.Age) return 0;
-                else if (x.Age > y.Age) return 0;
+                else if (x.Age > y.Age) return 1;
                 else return -1;
             }
         }
-        private class SortBySalary : IComparer<Employee>
+        private class SortBySalaryAscending : IComparer<Employee>
         {
             public int Compare(Employee x, Employee y)
             {
                 if (x.Salary == y.Salary) return 0;
-                else if (x.Salary > y.Salary) return 0;
+                else if (x.Salary > y.Salary) return 1;
                 else return -1;
             }
         }
 
-        private class SortByEmployeeDate : IComparer<Employee>
+        private class SortByEmployeeDateAscending : IComparer<Employee>
         {
             public int Compare(Employee x, Employee y)
             {
@@ -117,7 +118,7 @@ namespace HomeWork_11.Models
             }
         }
 
-        private class SortByType : IComparer<Employee>
+        private class SortByTypeAscending : IComparer<Employee>
         {
             public int Compare(Employee x, Employee y)
             {
@@ -129,29 +130,109 @@ namespace HomeWork_11.Models
                 else return -1;
             }
         }
+        #endregion
 
-        private IComparer<Employee> SortBy(SortCriterion criterion)
+        #region Descending
+        private class SortByFirstNameDescending : IComparer<Employee>
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Employees)));
-            if (criterion == SortCriterion.FristName) return new SortByFirstName();
-             else if (criterion == SortCriterion.LastName) return new SortByLastName();
-             else if (criterion == SortCriterion.Age) return new SortByAge();
-             else if (criterion == SortCriterion.Type) return new SortByType();
-             else if (criterion == SortCriterion.Salary) return new SortBySalary();
-             else return new SortByEmployeeDate();
+            public int Compare(Employee x, Employee y)
+            {
+                var result = String.Compare(x.First_Name, y.First_Name);
+                if (result == 1) return -1;
+                if (result == -1) return 1;
+                return result;
+            }
+        }
+
+        private class SortByLastNameDescending : IComparer<Employee>
+        {
+            public int Compare(Employee x, Employee y)
+            {
+                var result =  String.Compare(x.Last_Name, y.Last_Name);
+                if (result == 1) return -1;
+                if (result == -1) return 1;
+                return result;
+            }
+        }
+        private class SortByAgeDescending : IComparer<Employee>
+        {
+            public int Compare(Employee x, Employee y)
+            {
+                if (x.Age == y.Age) return 0;
+                else if (x.Age > y.Age) return -1;
+                else return 1;
+            }
+        }
+        private class SortBySalaryDescending : IComparer<Employee>
+        {
+            public int Compare(Employee x, Employee y)
+            {
+                if (x.Salary == y.Salary) return 0;
+                else if (x.Salary > y.Salary) return -1;
+                else return 1;
+            }
+        }
+
+        private class SortByEmployeeDateDescending : IComparer<Employee>
+        {
+            public int Compare(Employee x, Employee y)
+            {
+                var result =  DateTime.Compare(x.EmploymentDate, y.EmploymentDate);
+                if (result == 1) return -1;
+                if (result == -1) return 1;
+                return result;
+            }
+        }
+
+        private class SortByTypeDescending : IComparer<Employee>
+        {
+            public int Compare(Employee x, Employee y)
+            {
+                if ((x is Intern) && ((y is Manager) || (y is HighManager))) return -1;
+                else if ((x is Intern) && (y is Intern)) return 0;
+                else if ((x is Manager) && (y is HighManager)) return -1;
+                else if ((x is Manager) && (y is Manager)) return 0;
+                else if ((x is HighManager) && ((y is Manager) || (y is Intern))) return 1;
+                else return 1;
+            }
+        }
+        #endregion
+
+        private IComparer<Employee> SortByAscending(SortCriterion criterion)
+        {
+           
+            if (criterion == SortCriterion.FristName) return new SortByFirstNameAscending();
+             else if (criterion == SortCriterion.LastName) return new SortByLastNameAscending();
+             else if (criterion == SortCriterion.Age) return new SortByAgeAscending();
+             else if (criterion == SortCriterion.Type) return new SortByTypeAscending();
+             else if (criterion == SortCriterion.Salary) return new SortBySalaryAscending();
+             else return new SortByEmployeeDateAscending();
             
         }
 
-        public void Sort(SortCriterion criterion)
+        private IComparer<Employee> SortByDescending(SortCriterion criterion)
+        {
+            
+            if (criterion == SortCriterion.FristName) return new SortByFirstNameDescending();
+            else if (criterion == SortCriterion.LastName) return new SortByLastNameDescending();
+            else if (criterion == SortCriterion.Age) return new SortByAgeDescending();
+            else if (criterion == SortCriterion.Type) return new SortByTypeDescending();
+            else if (criterion == SortCriterion.Salary) return new SortBySalaryDescending();
+            else return new SortByEmployeeDateDescending();
+
+        }
+
+        public void Sort(SortCriterion criterion,bool line)
         {
             var listDep = Employees.ToList<Employee>();
-
-            if (criterion == SortCriterion.FristName) listDep.Sort(SortBy(Department.SortCriterion.FristName));
-            else if (criterion == SortCriterion.LastName) listDep.Sort(SortBy(Department.SortCriterion.LastName));
-            else if (criterion == SortCriterion.Age) listDep.Sort(SortBy(Department.SortCriterion.Age));
-            else if (criterion == SortCriterion.Type) listDep.Sort(SortBy(Department.SortCriterion.Type));
-            else if (criterion == SortCriterion.Salary) listDep.Sort(SortBy(Department.SortCriterion.Salary));
-            else listDep.Sort(SortBy(Department.SortCriterion.DateEmployee));
+            if (line == true)
+            {
+                listDep.Sort(SortByAscending(criterion));
+            }
+            else
+            {
+                listDep.Sort(SortByDescending(criterion));
+            }
 
             Employees.Clear();
 
@@ -159,6 +240,7 @@ namespace HomeWork_11.Models
             {
                 AddWorker(item);
             }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Employees)));
         }
 
         public bool Equals(Department other) => this.Id == other.Id;

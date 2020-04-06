@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -20,7 +21,10 @@ namespace HomeWork_11
         private Employee transferEmployee ;
         private Department transferDepartment;
 
+        private bool sortLine = false;
 
+       
+            
         #region Конструктор
         /// <summary>
         /// При запуске приложения
@@ -42,6 +46,7 @@ namespace HomeWork_11
             StartTransferButton.Visibility = Visibility.Hidden;
             EditEmployeeButton.Visibility = Visibility.Hidden;
             mainorg_expanded();
+            fillSortLines();
         }
         /// <summary>
         /// Метод для проверки наличая базы при старте программы
@@ -171,7 +176,7 @@ namespace HomeWork_11
             txt2.DataContext = item;
             
             txt1.DataContext = dep;
-
+            pickSortLine(0, true);
         }
         /// <summary>
         /// Метод обрабатывающий нажатие по кнопке и вызов окна добавления работника
@@ -402,31 +407,38 @@ namespace HomeWork_11
         {
             
             var header = sender as GridViewColumnHeader;
-            var thisHeader = header.Content;
-
+            var thisHeader = (StackPanel)header.Content;
+            var neededtextblock = (TextBlock)thisHeader.Children[2];
             var dep = txt1.DataContext as Department;
             if(dep!=null)
-            switch ((thisHeader as TextBlock).Text)
+            switch (neededtextblock.Text)
             {
                 case "Фамилия":
-                    dep.Sort(Department.SortCriterion.LastName);
+                    dep.Sort(Department.SortCriterion.LastName,sortLine);
+                        pickSortLine(sortLine == true ? 2 : 3);  
                     break;
                 case "Имя":
-                    dep.Sort(Department.SortCriterion.FristName);
-                    break;
+                    dep.Sort(Department.SortCriterion.FristName, sortLine);
+                        pickSortLine(sortLine == true ? 0 : 1);
+                        break;
                 case "Должность":
-                    dep.Sort(Department.SortCriterion.Type);
-                    break;
+                    dep.Sort(Department.SortCriterion.Type, sortLine);
+                        pickSortLine(sortLine == true ? 4 : 5);
+                        break;
                 case "Возраст(Лет)":
-                    dep.Sort(Department.SortCriterion.Age);
-                    break;
+                    dep.Sort(Department.SortCriterion.Age, sortLine);
+                        pickSortLine(sortLine == true ? 6 : 7);
+                        break;
                 case "Зарплата($)":
-                    dep.Sort(Department.SortCriterion.Salary);
-                    break;
+                    dep.Sort(Department.SortCriterion.Salary, sortLine);
+                        pickSortLine(sortLine == true ? 10 : 11);
+                        break;
                 default:
-                    dep.Sort(Department.SortCriterion.DateEmployee);
-                    break;
+                    dep.Sort(Department.SortCriterion.DateEmployee, sortLine);
+                        pickSortLine(sortLine == true ? 8 : 9);
+                        break;
             }
+            sortLine = !sortLine;
         }
 
         private void SelectWorkerButton_Click(object sender, RoutedEventArgs e)
@@ -483,6 +495,41 @@ namespace HomeWork_11
             EditEmployeeButton.Visibility = Visibility.Hidden;
             editPage.Show();
             repo.IsSaved = false;
+        }
+
+
+
+        private List<MaterialDesignThemes.Wpf.PackIcon> SortLines = new List<MaterialDesignThemes.Wpf.PackIcon>();
+
+        private void fillSortLines()
+        {
+            SortLines.Add(NameAsc);
+            SortLines.Add(NameDesc);
+            SortLines.Add(LNameAsc);
+            SortLines.Add(LNameDesc);
+            SortLines.Add(PostAsc);
+            SortLines.Add(PostDesc);
+            SortLines.Add(AgeAsc);
+            SortLines.Add(AgeDesc);
+            SortLines.Add(EmplDateAsc);
+            SortLines.Add(EmplDateDesc);
+            SortLines.Add(SalaryAsc);
+            SortLines.Add(SalaryDesc);
+        }
+
+        private void pickSortLine(int numberLine, bool all = false)
+        {
+            byte count = 0;
+            foreach (var item in SortLines)
+            {
+                if (count == numberLine)
+                {
+                   if(all !=true) item.Visibility = Visibility.Visible;
+                 
+                }
+                else item.Visibility = Visibility.Collapsed;
+                count++;
+            }
         }
     }
 }

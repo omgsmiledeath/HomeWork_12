@@ -13,8 +13,8 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="AddDepartment" 
         MaxHeight="225" MaxWidth="500"
+        Title="Работа с департаментом"
         Width="500" Height="180">
 
 
@@ -23,6 +23,6 @@
                  materialDesign:HintAssist.Hint="Название организации" />
         <Button x:Name="AddDepButton" Margin="100,10,100,10"
                 Click="AddDepButton_Click"
-                Content="Добавить департамент"/>
+                Content="Внести"/>
     </StackPanel>
 </Window>
